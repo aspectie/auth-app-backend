@@ -24,4 +24,14 @@ export class UsersController {
   async findOne(@Param('id') id: string): Promise<User> {
     return this.usersService.findOne(id);
   }
+
+  @Delete(':id')
+  async remove(@Param('id') id: string): Promise<User> {
+    return this.usersService.remove(id);
+  }
+
+  @Patch(':id')
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(id, updateUserDto);
+  }
 }
