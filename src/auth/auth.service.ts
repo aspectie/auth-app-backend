@@ -2,7 +2,6 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from '../users/dto/create-user.dto';
-import { User } from '../users/schemas/user.schema';
 
 @Injectable()
 export class AuthService {
@@ -24,6 +23,7 @@ export class AuthService {
       const user = await this.usersService.create(dto);
       return {
         access_token: await this.jwtService.signAsync({ sub: user._id }),
+        user
       };
     } catch (err) {
       throw new ForbiddenException(`Sign up error: ${err}`);
@@ -32,7 +32,8 @@ export class AuthService {
 
   async signIn(user: any): Promise<any> {
     return {
-      access_token: await this.jwtService.signAsync({ sub: user._id })
+      access_token: await this.jwtService.signAsync({ sub: user._id }),
+      user
     };
   }
 }

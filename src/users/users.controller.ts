@@ -5,6 +5,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { User } from './schemas/user.schema';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { UserId } from '../auth/decorators/user.decorator';
 
 @Controller('users')
 @ApiTags('users')
@@ -21,6 +22,11 @@ export class UsersController {
   @Get()
   async findAll(): Promise<User[]> {
     return this.usersService.findAll();
+  }
+
+  @Get('/me')
+  getMe(@UserId() id: string) {
+    return this.usersService.findById(id);
   }
 
   @Get(':id')
