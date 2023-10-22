@@ -14,11 +14,11 @@ export class User extends Document {
   @Prop()
   password: string
 
-  @Prop({default: Date.now()})
+  @Prop({ default: () => new Date() })
   createdAt: Date
 
-  @Prop()
-  loggedInAt?: Date
+  @Prop({ default: () => new Date() })
+  loggedInAt: Date
 
   @Prop({default: false})
   isBlocked: boolean
