@@ -14,13 +14,13 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @ApiBody({ type: CreateUserDto })
   @Post('sign-in')
-  async signIn(@Request() req) {
+  signIn(@Request() req) {
     return this.authService.signIn(req.user);
   }
 
   @Public()
   @Post('sign-up')
-  register(@Body() dto: CreateUserDto) {
+  signUp(@Body() dto: CreateUserDto) {
     return this.authService.signUp(dto);
   }
 }

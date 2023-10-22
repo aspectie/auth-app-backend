@@ -13,6 +13,8 @@ export class AuthService {
   async validateUser(email: string, _password: string): Promise<any> {
     const user = await this.usersService.findByEmail(email);
     if (user && user.password === _password) {
+      this.usersService.updateLastLogin(user._id);
+      
       return user;
     }
     return null;

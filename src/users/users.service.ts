@@ -41,4 +41,12 @@ export class UsersService {
 
     return updatedUser;
   }
+
+  async updateLastLogin(id: string) {
+    const updatedUser = await this.userModel
+      .findByIdAndUpdate({ _id: id }, { loggedInAt: new Date() }, { new: true })
+      .exec();
+
+    return updatedUser;
+  }
 }
