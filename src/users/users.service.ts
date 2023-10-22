@@ -18,8 +18,12 @@ export class UsersService {
     return this.userModel.find().exec();
   }
 
-  async findOne(id: string): Promise<User> {
+  async findById(id: string): Promise<User> {
     return this.userModel.findOne({ _id: id }).exec();
+  }
+
+  async findByEmail(email: string): Promise<User> {
+    return this.userModel.findOne({ email }).exec();
   }
 
   async remove(id: string) {
@@ -32,7 +36,15 @@ export class UsersService {
 
   async update(id: string, updateUserDto: UpdateUserDto) {
     const updatedUser = await this.userModel
-      .findByIdAndUpdate({ _id: id }, updateUserDto)
+      .findByIdAndUpdate({ _id: id }, updateUserDto, { new: true })
+      .exec();
+
+    return updatedUser;
+  }
+
+  async updateLastLogin(id: string) {
+    const updatedUser = await this.userModel
+      .findByIdAndUpdate({ _id: id }, { loggedInAt: new Date() }, { new: true })
       .exec();
 
     return updatedUser;

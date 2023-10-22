@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { Document, HydratedDocument } from 'mongoose';
  
 export type UserDocument = HydratedDocument<User>;
 
 @Schema()
-export class User {
+export class User extends Document {
   @Prop()
   name: string;
 
@@ -14,11 +14,11 @@ export class User {
   @Prop()
   password: string
 
-  @Prop({default: Date.now()})
+  @Prop({ default: () => new Date() })
   createdAt: Date
 
-  @Prop()
-  loggedInAt?: Date
+  @Prop({ default: () => new Date() })
+  loggedInAt: Date
 
   @Prop({default: false})
   isBlocked: boolean

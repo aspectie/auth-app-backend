@@ -2,19 +2,21 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty } from "class-validator";
 
 export class CreateUserDto {
-  @ApiProperty()
-  @IsNotEmpty()
+  @ApiProperty({required: false, default: 'a'})
   readonly name: string
 
-  @ApiProperty()
+  @ApiProperty({default: 'a@mail.ru'})
   @IsNotEmpty()
   @IsEmail()
   readonly email: string
 
-  @ApiProperty()
+  @ApiProperty({default: 'a'})
   @IsNotEmpty()
   readonly password: string
 
-  @ApiProperty({default: Date.now(), required: false})
+  @ApiProperty({required: false})
   readonly createdAt: Date
+
+  @ApiProperty({required: false})
+  readonly loggedInAt: Date
 }
