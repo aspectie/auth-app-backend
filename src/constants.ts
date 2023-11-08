@@ -1,2 +1,3 @@
 export const USER_MODEL = 'USER_MODEL'
+export const ITEM_MODEL = 'ITEM_MODEL'
 export const DATABASE_CONNECTION = 'DATABASE_CONNECTION '
