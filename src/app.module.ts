@@ -4,9 +4,11 @@ import { ConfigModule } from '@nestjs/config';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ItemsModule } from './items/items.module';
+import { CollectionsModule } from './collections/collections.module';
 
 @Module({
   imports: [
@@ -18,8 +20,9 @@ import { ItemsModule } from './items/items.module';
     AuthModule,
     UsersModule,
     ItemsModule,
+    CollectionsModule,
   ],
   controllers: [AppController],
-  providers: [AppService, ItemsModule],
+  providers: [AppService],
 })
 export class AppModule {}
