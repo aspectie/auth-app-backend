@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ConfigModule } from '@nestjs/config';
 
 import { AppController } from './app.controller';
@@ -17,6 +18,7 @@ import { CollectionsModule } from './collections/collections.module';
       isGlobal: true
     }),
     MongooseModule.forRoot(process.env.DB_URI),
+    EventEmitterModule.forRoot(),
     AuthModule,
     UsersModule,
     ItemsModule,
