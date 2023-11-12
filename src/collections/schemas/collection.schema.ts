@@ -13,6 +13,9 @@ export class Collection extends Document {
 
   @Prop()
   theme: string;
+
+  @Prop()
+  image: string
 }
 
 export const CollectionSchema = SchemaFactory.createForClass(Collection);
