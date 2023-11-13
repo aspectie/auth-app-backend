@@ -16,7 +16,7 @@ export class CollectionsService {
   }
 
   async findAll(): Promise<Collection[]> {
-    return this.collectionModel.find().exec();
+    return await this.collectionModel.find().exec();
   }
 
   async remove(id: string) {

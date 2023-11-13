@@ -40,6 +40,9 @@ export class CollectionsController {
         },
         theme: {
           type: 'string'
+        },
+        user_id: {
+          type: 'string'
         }
       }
     }
@@ -52,7 +55,7 @@ export class CollectionsController {
     const newCollection = await this.collectionsService.create(createCollectionDto);
     const filePath = await this.S3Service.uploadFile(file, String(newCollection._id));
     const collection = await this.collectionsService.update(newCollection._id, {
-      image: filePath
+      image_url: filePath
     })
 
     return collection; 
@@ -94,6 +97,9 @@ export class CollectionsController {
         },
         theme: {
           type: 'string'
+        },
+        user_id: {
+          type: 'string'
         }
       }
     }
@@ -104,7 +110,7 @@ export class CollectionsController {
     @Body() updateCollectionDto: UpdateCollectionDto
   ) {
     const filePath = await this.S3Service.uploadFile(file, id);
-    updateCollectionDto.image = filePath
+    updateCollectionDto.image_url = filePath
 
     return await this.collectionsService.update(id, updateCollectionDto);
   }

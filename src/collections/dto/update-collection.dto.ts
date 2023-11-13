@@ -1,8 +1,8 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { PartialType } from '@nestjs/swagger';
 import { CreateCollectionDto } from './create-collection.dto';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateCollectionDto extends PartialType(CreateCollectionDto) {
-  @ApiProperty({required: false})
-  image: string
+  @ApiProperty()
+  image_url: string
 }

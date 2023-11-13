@@ -9,4 +9,7 @@ export class CreateCollectionDto {
 
   @ApiProperty({required: true})
   readonly theme: string
+
+  @ApiProperty({required: true})
+  readonly user_id: string
 }

@@ -9,6 +9,9 @@ export class Item extends Document {
   title: string;
 
   @Prop()
+  collection_id: string;
+
+  @Prop()
   tags: string[];
 
   @Prop()
