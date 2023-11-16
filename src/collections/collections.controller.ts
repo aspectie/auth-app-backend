@@ -41,7 +41,7 @@ export class CollectionsController {
         theme: {
           type: 'string'
         },
-        user_id: {
+        user: {
           type: 'string'
         }
       }
@@ -53,12 +53,15 @@ export class CollectionsController {
     @Body() createCollectionDto: CreateCollectionDto,
   ) {
     const newCollection = await this.collectionsService.create(createCollectionDto);
-    const filePath = await this.S3Service.uploadFile(file, String(newCollection._id));
-    const collection = await this.collectionsService.update(newCollection._id, {
-      image_url: filePath
-    })
+    if (file) {
+      const filePath = await this.S3Service.uploadFile(file, String(newCollection._id));
+      const collection = await this.collectionsService.update(newCollection._id, {
+        image_url: filePath
+      })
+      return collection
+    }
 
-    return collection; 
+    return newCollection; 
   }
 
   @Get()
@@ -98,7 +101,7 @@ export class CollectionsController {
         theme: {
           type: 'string'
         },
-        user_id: {
+        user: {
           type: 'string'
         }
       }
@@ -111,6 +114,11 @@ export class CollectionsController {
   ) {
     const filePath = await this.S3Service.uploadFile(file, id);
     updateCollectionDto.image_url = filePath
+
+    this.eventEmitter.emit(
+      'collection.updated',
+      updateCollectionDto
+    );
 
     return await this.collectionsService.update(id, updateCollectionDto);
   }

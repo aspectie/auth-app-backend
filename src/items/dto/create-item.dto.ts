@@ -5,7 +5,7 @@ export class CreateItemDto {
   readonly title: string
 
   @ApiProperty()
-  readonly collection_id: string
+  readonly _collection: string
 
   @ApiProperty({required: false})
   readonly tags: string[]

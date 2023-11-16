@@ -7,7 +7,10 @@ import { AwsS3Module } from 'src/aws-s3/s3.module';
 
 import { CollectionsService } from './collections.service';
 import { CollectionsController } from './collections.controller';
+
 import { collectionsProviders } from './collections.provider';
+import { categoriesProviders } from 'src/categories/categories.provider';
+import { usersProviders } from 'src/users/users.provider';
 
 @Module({
   imports: [DatabaseModule, AwsS3Module],
@@ -18,7 +21,9 @@ import { collectionsProviders } from './collections.provider';
       useClass: JwtAuthGuard
     },
     CollectionsService,
-    ...collectionsProviders
+    ...collectionsProviders,
+    ...categoriesProviders,
+    ...usersProviders
   ],
   exports: [CollectionsService]
 })

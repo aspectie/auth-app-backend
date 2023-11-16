@@ -11,5 +11,5 @@ export class CreateCollectionDto {
   readonly theme: string
 
   @ApiProperty({required: true})
-  readonly user_id: string
+  readonly user: string
 }

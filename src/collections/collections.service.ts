@@ -16,7 +16,11 @@ export class CollectionsService {
   }
 
   async findAll(): Promise<Collection[]> {
-    return await this.collectionModel.find().exec();
+    return await this.collectionModel
+      .find()
+      .populate('theme', 'name')
+      .populate('user', 'name')
+      .exec();
   }
 
   async remove(id: string) {
