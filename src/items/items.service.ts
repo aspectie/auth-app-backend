@@ -5,6 +5,7 @@ import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
 import { ITEM_MODEL } from 'src/constants';
 import { OnEvent } from '@nestjs/event-emitter';
+import { Collection } from 'src/collections/schemas/collection.schema';
 
 @Injectable()
 export class ItemsService {
@@ -29,10 +30,13 @@ export class ItemsService {
     return deletedItem;
   }
 
-  @OnEvent('collection.removed')
-  async removeByCollectionId(id: string): Promise<any>  {
+  @OnEvent('collections.removed')
+  async removeByCollections(collections: Collection[]): Promise<any> {
+    const ids = collections.map((collection) => {
+      return collection._id
+    })
     const deletedItems = await this.itemModel
-      .deleteMany({ _collection: id })
+      .deleteMany({ _collection: { $in: ids } })
       .exec();
 
     return deletedItems;
@@ -44,16 +48,5 @@ export class ItemsService {
       .exec();
 
     return updatedItem;
-  }
-
-  @OnEvent('collection.updated')
-  async updateByCollectionId(id: string): Promise<any>  {
-    //TODO: mapping fields
-
-    // const deletedItems = await this.itemModel
-    //   .updateMany({ _collection: id })
-    //   .exec();
-
-    // return deletedItems;
   }
 }

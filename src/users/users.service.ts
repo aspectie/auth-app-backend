@@ -4,10 +4,14 @@ import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { USER_MODEL } from 'src/constants';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class UsersService {
-  constructor(@Inject(USER_MODEL) private readonly userModel: Model<User>) {}
+  constructor(
+    @Inject(USER_MODEL) private readonly userModel: Model<User>,
+    private readonly eventEmitter: EventEmitter2,
+  ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const createdUser = await this.userModel.create(createUserDto);
@@ -30,6 +34,11 @@ export class UsersService {
     const deletedUser = await this.userModel
       .findByIdAndRemove({ _id: id })
       .exec();
+
+    this.eventEmitter.emit(
+      'user.removed',
+      id
+    );  
 
     return deletedUser;
   }
