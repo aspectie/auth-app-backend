@@ -19,4 +19,7 @@ export class CreateUserDto {
 
   @ApiProperty({required: false})
   readonly loggedInAt: Date
+
+  @ApiProperty({required: false})
+  readonly isAdmin?: boolean
 }

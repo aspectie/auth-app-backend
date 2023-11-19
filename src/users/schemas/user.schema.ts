@@ -22,6 +22,9 @@ export class User extends Document {
 
   @Prop({default: false})
   isBlocked: boolean
+
+  @Prop({default: false})
+  isAdmin: boolean
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
