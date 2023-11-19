@@ -1,5 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Type } from 'class-transformer';
 import { Document, HydratedDocument } from 'mongoose';
+import * as mongoose from 'mongoose';
+import { Collection } from 'src/collections/schemas/collection.schema';
  
 export type UserDocument = HydratedDocument<Item>;
 
@@ -7,6 +10,10 @@ export type UserDocument = HydratedDocument<Item>;
 export class Item extends Document {
   @Prop()
   title: string;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Collection' })
+  @Type(() => Collection)
+  _collection: Collection;
 
   @Prop()
   tags: string[];

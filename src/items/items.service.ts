@@ -4,6 +4,8 @@ import { Model } from 'mongoose';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
 import { ITEM_MODEL } from 'src/constants';
+import { OnEvent } from '@nestjs/event-emitter';
+import { Collection } from 'src/collections/schemas/collection.schema';
 
 @Injectable()
 export class ItemsService {
@@ -14,7 +16,10 @@ export class ItemsService {
   }
 
   async findAll(): Promise<Item[]> {
-    return this.itemModel.find().exec();
+    return this.itemModel
+      .find()
+      .populate('_collection')
+      .exec();
   }
 
   async remove(id: string) {
@@ -23,6 +28,18 @@ export class ItemsService {
       .exec();
 
     return deletedItem;
+  }
+
+  @OnEvent('collections.removed')
+  async removeByCollections(collections: Collection[]): Promise<any> {
+    const ids = collections.map((collection) => {
+      return collection._id
+    })
+    const deletedItems = await this.itemModel
+      .deleteMany({ _collection: { $in: ids } })
+      .exec();
+
+    return deletedItems;
   }
 
   async update(id: string, updateItemDto: UpdateItemDto) {

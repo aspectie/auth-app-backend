@@ -7,6 +7,7 @@ import { DatabaseModule } from 'src/database/database.module';
 import { ItemsService } from './items.service';
 import { ItemsController } from './items.controller';
 import { itemsProviders } from './items.provider';
+import { collectionsProviders } from 'src/collections/collections.provider';
 
 @Module({
   imports: [DatabaseModule],
@@ -17,7 +18,8 @@ import { itemsProviders } from './items.provider';
       useClass: JwtAuthGuard
     },
     ItemsService,
-    ...itemsProviders
+    ...itemsProviders,
+    ...collectionsProviders
   ],
   exports: [ItemsService]
 })
