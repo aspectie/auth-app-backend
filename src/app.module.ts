@@ -10,6 +10,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ItemsModule } from './items/items.module';
 import { CollectionsModule } from './collections/collections.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { CollectionsModule } from './collections/collections.module';
     EventEmitterModule.forRoot(),
     AuthModule,
     UsersModule,
+    CategoriesModule,
     CollectionsModule,
     ItemsModule,
   ],
