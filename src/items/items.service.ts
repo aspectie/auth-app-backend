@@ -24,7 +24,7 @@ export class ItemsService {
 
   async findById(id: string): Promise<Item> {
     return await this.itemModel
-      .findOne({ _collection: id })
+      .findOne({ _id: id })
       .exec();
   }
 
