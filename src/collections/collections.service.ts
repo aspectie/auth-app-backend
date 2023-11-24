@@ -35,6 +35,13 @@ export class CollectionsService {
       .exec();
   }
 
+  async findByUserId(id: string): Promise<Collection[]> {
+    return this.collectionModel
+      .find({ user: id })
+      .populate('theme', 'name')
+      .exec();
+  }
+
   async remove(id: string) {
     const deletedCollection = await this.collectionModel
       .findByIdAndRemove({ _id: id })

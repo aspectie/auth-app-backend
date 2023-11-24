@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from '@nestjs/common';
 import { ItemsService } from './items.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Item } from './schemas/item.schema';
@@ -19,14 +19,16 @@ export class ItemsController {
   }
 
   @Get()
-  async findAll(): Promise<Item[]> {
-    return this.itemsService.findAll();
+  async findByCollectionId(@Query('collection') collection_id: string): Promise<Item[]> {
+    return collection_id
+      ? this.itemsService.findByCollectionId(collection_id)
+      : this.itemsService.findAll();
   }
 
-  // @Get(':id')
-  // async findOne(@Param('id') id: string): Promise<Item> {
-  //   return this.itemsService.findById(id);
-  // }
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<Item> {
+    return this.itemsService.findById(id);
+  }
 
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<Item> {

@@ -9,6 +9,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
+import { UserId } from 'src/auth/decorators/user.decorator';
 
 @Controller('collections')
 @ApiTags('collections')
@@ -65,6 +66,11 @@ export class CollectionsController {
   @Get()
   async findAll(): Promise<Collection[]> {
     return this.collectionsService.findAll();
+  }
+
+  @Get('/me')
+  async findMe(@UserId() id: string): Promise<Collection[]> {
+    return this.collectionsService.findByUserId(id);
   }
 
   @Get(':id')

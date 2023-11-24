@@ -22,6 +22,18 @@ export class ItemsService {
       .exec();
   }
 
+  async findById(id: string): Promise<Item> {
+    return await this.itemModel
+      .findOne({ _id: id })
+      .exec();
+  }
+
+  async findByCollectionId(id: string): Promise<Item[]> {
+    return await this.itemModel
+      .find({ _collection: id })
+      .exec();
+  }
+
   async remove(id: string) {
     const deletedItem = await this.itemModel
       .findByIdAndRemove({ _id: id })
