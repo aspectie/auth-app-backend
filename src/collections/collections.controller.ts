@@ -23,29 +23,6 @@ export class CollectionsController {
 
   @Post()
   @ApiConsumes('multipart/form-data')
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        file: {
-          type: 'string',
-          format: 'binary'
-        },
-        title: {
-          type: 'string'
-        },
-        description: {
-          type: 'string'
-        },
-        theme: {
-          type: 'string'
-        },
-        user: {
-          type: 'string'
-        }
-      }
-    }
-  })
   @UseInterceptors(FileInterceptor('file'))
   async createWithImage(
     @UploadedFile() file: Express.Multer.File,
@@ -55,7 +32,7 @@ export class CollectionsController {
     if (file) {
       const filePath = await this.S3Service.uploadFile(file, String(newCollection._id));
       const collection = await this.collectionsService.update(newCollection._id, {
-        image_url: filePath
+        imageUrl: filePath
       })
       return collection
     }
@@ -88,29 +65,6 @@ export class CollectionsController {
   @Patch(':id')
   @UseInterceptors(FileInterceptor('file'))
   @ApiConsumes('multipart/form-data')
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        file: {
-          type: 'string',
-          format: 'binary'
-        },
-        title: {
-          type: 'string'
-        },
-        description: {
-          type: 'string'
-        },
-        theme: {
-          type: 'string'
-        },
-        user: {
-          type: 'string'
-        }
-      }
-    }
-  })
   async update(
     @Param('id') id: string,
     @UploadedFile() file: Express.Multer.File,
@@ -118,7 +72,7 @@ export class CollectionsController {
   ) {
     if (file) {
       const filePath = await this.S3Service.uploadFile(file, id);
-      updateCollectionDto.image_url = filePath
+      updateCollectionDto.imageUrl = filePath
     }
 
     return await this.collectionsService.update(id, updateCollectionDto);

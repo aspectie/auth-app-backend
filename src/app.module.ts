@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { ItemsModule } from './items/items.module';
 import { CollectionsModule } from './collections/collections.module';
 import { CategoriesModule } from './categories/categories.module';
+import { CustomFieldsModule } from './customFields/customFields.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { CategoriesModule } from './categories/categories.module';
     CategoriesModule,
     CollectionsModule,
     ItemsModule,
+    CustomFieldsModule
   ],
   controllers: [AppController],
   providers: [AppService],

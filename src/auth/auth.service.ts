@@ -24,7 +24,7 @@ export class AuthService {
     try {
       const user = await this.usersService.create(dto);
       return {
-        access_token: await this.jwtService.signAsync({ sub: user._id }),
+        accessToken: await this.jwtService.signAsync({ sub: user._id }),
         user
       };
     } catch (err) {
@@ -34,7 +34,7 @@ export class AuthService {
 
   async signIn(user: any): Promise<any> {
     return {
-      access_token: await this.jwtService.signAsync({ sub: user._id }),
+      accessToken: await this.jwtService.signAsync({ sub: user._id }),
       user
     };
   }

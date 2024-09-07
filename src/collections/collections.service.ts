@@ -61,7 +61,7 @@ export class CollectionsService {
       .find({ user: id })
       .exec();
 
-    const deletedCollections = await this.collectionModel
+    await this.collectionModel
       .deleteMany({ user: id })
       .exec();  
 
